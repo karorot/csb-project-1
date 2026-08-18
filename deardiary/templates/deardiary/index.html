@@ -1,0 +1,13 @@
+{% extends "deardiary/layout.html" %}
+
+{% block title %}Dear Diary{% endblock %}
+
+{% block content %}
+
+<ul>
+{% for entry in entries %}
+    <li>{{ entry.pub_date }}: <a href="/entry/{{ entry.id }}">{{ entry.title }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}
