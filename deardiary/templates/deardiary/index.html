@@ -12,6 +12,7 @@
     </ul>
 {% else %}
     <p><a href="{% url 'login' %}">Login</a> to read and write to your personal diary.</p>
+    <p>Don't have an account yet? <a href="{% url 'signup' %}">Create one!</a></p>
 {% endif %}
 
 {% endblock %}

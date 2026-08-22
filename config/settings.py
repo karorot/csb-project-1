@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'deardiary.apps.DeardiaryConfig'
+    'deardiary.apps.DeardiaryConfig',
+    'accounts.apps.AccountsConfig'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,14 @@
+{% extends "deardiary/layout.html" %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+
+<h2>Create user</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Sign up</button>
+</form>
+
+{% endblock %}
