@@ -11,6 +11,15 @@
 
         <p>This is a simple web app for csb-project-1</p>
 
+        {% if user.is_authenticated %}
+            <p>Logged in as {{ user.username }}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </p>
+        {% endif %}
+
         {% block content %}{% endblock %}
     </body>
 </html>

@@ -9,4 +9,4 @@ class Entry(models.Model):
     body = models.CharField(max_length=1000)
 
     def __str__(self):
-        return f"Entry by {self.writer} from {self.pub_date}"
+        return f"Entry titled {self.title} ({self.pub_date})"
