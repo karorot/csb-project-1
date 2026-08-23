@@ -1,9 +1,15 @@
-{% extends "layout.html" %}
+{% extends "deardiary/layout.html" %}
 
 {% block title %}On this day...{% endblock %}
 
 {% block content %}
 
-{{entry}}
+<h2>On this day, I...</h2>
+
+<p>{{ entry.title }}, {{ entry.pub_date }}</p>
+
+<p>{{ entry.body }}</p>
+
+<p><a href="{% url 'home' %}">Return</a></p>
 
 {% endblock %}

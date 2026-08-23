@@ -5,11 +5,18 @@
 {% block content %}
 
 {% if user.is_authenticated %}
+    <h2>Something on your mind today?</h2>
+    <a href="{% url 'new' %}">Write a new entry</a>
+
+    {% if entries %}
+    <h2>Past entries</h2>
     <ul>
     {% for entry in entries %}
         <li>{{ entry.pub_date }}: <a href="{% url 'entry' entry.id %}">{{ entry.title }}</a></li>
     {% endfor %}
+    {% endif %}
     </ul>
+
 {% else %}
     <p><a href="{% url 'login' %}">Login</a> to read and write to your personal diary.</p>
     <p>Don't have an account yet? <a href="{% url 'signup' %}">Create one!</a></p>

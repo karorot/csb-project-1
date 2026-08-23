@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
@@ -17,8 +17,18 @@ def read_entry(request, entry_id):
 
 @login_required
 def create_entry(request):
-    response = "Write a new diary entry"
-    return HttpResponse(response)
+    return render(request, 'deardiary/new.html')
+
+
+@login_required
+def add_entry(request):
+    writer = User.objects.get(id=request.user.id)
+    title = request.POST.get('title')
+    body = request.POST.get('body')
+
+    Entry.objects.create(writer=writer, title=title, body=body)
+
+    return redirect('/')
 
 
 def index(request):
