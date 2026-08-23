@@ -6,10 +6,10 @@
 
 {% if user.is_authenticated %}
     <h2>Something on your mind today?</h2>
-    <a href="{% url 'new' %}">Write a new entry</a>
+    <p><a href="{% url 'new' %}">Write to your diary</a></p>
 
     {% if entries %}
-    <h2>Past entries</h2>
+    <h2>Past diary entries</h2>
     <ul>
     {% for entry in entries %}
         <li>{{ entry.pub_date }}: <a href="{% url 'entry' entry.id %}">{{ entry.title }}</a></li>

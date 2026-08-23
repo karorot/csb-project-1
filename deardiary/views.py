@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 from .models import Entry
 
@@ -27,6 +28,8 @@ def add_entry(request):
     body = request.POST.get('body')
 
     Entry.objects.create(writer=writer, title=title, body=body)
+
+    messages.success(request, 'Entry saved!')
 
     return redirect('/')
 
