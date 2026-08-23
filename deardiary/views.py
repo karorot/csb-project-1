@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -13,6 +13,11 @@ def read_entry(request, entry_id):
         entry = Entry.objects.get(pk=entry_id)
     except Entry.DoesNotExist:
         raise Http404("No such entry")
+
+    # fix for flaw 1: broken access control
+    if request.user != entry.writer:
+        return HttpResponseForbidden()
+
     return render(request, 'deardiary/entry.html', {'entry': entry})
 
 
