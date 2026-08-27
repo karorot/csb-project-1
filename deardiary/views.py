@@ -21,8 +21,8 @@ def read_entry(request, entry_id):
         raise Http404()
 
     # fix for flaw 1: broken access control
-    if request.user != entry.writer:
-        return HttpResponseForbidden()
+    # if request.user != entry.writer:
+        # return HttpResponseForbidden()
 
     return render(request, 'deardiary/entry.html', {'entry': entry})
 
