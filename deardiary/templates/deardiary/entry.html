@@ -6,9 +6,13 @@
 
 <h2>On this day, I...</h2>
 
-<p>{{ entry.title }}, {{ entry.pub_date }}</p>
+<h3>Title: {{ entry.title }}, {{ entry.pub_date }}</h3>
 
 <p>{{ entry.body }}</p>
+
+{% if not entry.public %}
+  <p>(This entry is for my eyes only)</p>
+{% endif %}
 
 <p><a href="{% url 'home' %}">Return</a></p>
 

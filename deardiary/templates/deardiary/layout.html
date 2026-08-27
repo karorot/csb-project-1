@@ -1,31 +1,31 @@
 <!doctype html>
 
 <html land="en-US">
-    <head>
-        <meta charset="utf-8" />
-        <title>{% block title %}{% endblock %}</title>
-    </head>
+  <head>
+      <meta charset="utf-8" />
+      <title>{% block title %}{% endblock %}</title>
+  </head>
 
-    <body>
-        <h1>Dear Diary</h1>
+  <body>
+    <h1>Dear Diary</h1>
 
-        <p>This is a simple web app for csb-project-1</p>
+    <p>This is a simple web app for csb-project-1</p>
 
-        {% if user.is_authenticated %}
-            <p>Logged in as {{ user.username }}
-                <form action="{% url 'logout' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                </form>
-            </p>
-        {% endif %}
+    {% if user.is_authenticated %}
+      <p>Logged in as {{ user.username }}
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+        </form>
+      </p>
+    {% endif %}
 
-        {% if messages %}
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        {% endif %}
+    {% if messages %}
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+    {% endif %}
 
-        {% block content %}{% endblock %}
-    </body>
+    {% block content %}{% endblock %}
+  </body>
 </html>

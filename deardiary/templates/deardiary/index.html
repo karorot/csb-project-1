@@ -5,24 +5,32 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-    <h2>Something on your mind today?</h2>
-    <p><a href="{% url 'new' %}">Write to your diary</a></p>
+  <h2>Something on your mind today?</h2>
+  <p><a href="{% url 'new' %}">Write to your diary</a></p>
 
-    {% if entries %}
-    <h2>Your diary entries</h2>
-    <ul>
-    {% for entry in entries %}
-        <li>{{ entry.pub_date }}: <a href="{% url 'entry' entry.id %}">{{ entry.title }}</a></li>
-    {% endfor %}
-    {% endif %}
-    </ul>
+  <hr>
 
-    <h2>Take a peek at what others are thinking</h2>
-    <div>{{ random.body }} </div>
+  {% if entries %}
+  <h2>Your diary entries</h2>
+  <ul>
+  {% for entry in entries %}
+    <li>{{ entry.pub_date }}: <a href="{% url 'entry' entry.id %}">{{ entry.title }}</a></li>
+  {% endfor %}
+  {% endif %}
+  </ul>
+
+  <hr>
+
+  <h2>Browse random public entries</h2>
+  <ul>
+  {% for pick in random %}
+    <li>{{ pick.pub_date }}: <a href="{% url 'entry' pick.id %}">{{ pick.title }}</a></li>
+  {% endfor %}
+    </ul> 
 
 {% else %}
-    <p><a href="{% url 'login' %}">Login</a> to read and write to your personal diary.</p>
-    <p>Don't have an account yet? <a href="{% url 'signup' %}">Create one!</a></p>
+  <p><a href="{% url 'login' %}">Login</a> to read and write to your personal diary.</p>
+  <p>Don't have an account yet? <a href="{% url 'signup' %}">Create one!</a></p>
 {% endif %}
 
 {% endblock %}
