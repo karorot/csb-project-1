@@ -7,6 +7,7 @@ class Entry(models.Model):
     pub_date = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=100)
     body = models.CharField(max_length=1000)
+    public = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Entry titled {self.title} ({self.pub_date})"

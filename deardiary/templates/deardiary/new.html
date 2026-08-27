@@ -7,20 +7,28 @@
 <h2>Write your thoughts to your diary</h2>
 
 <form action="{% url 'add' %}" method="post">
-    {% csrf_token %}
+  {% csrf_token %}
 
-    <p>
+  <p>
     <label for="title">Title:</label><br />
     <input style="height:2em;width:30em" type="text" id="title" name="title" required minlength="1" maxlength="100"><br />
-    </p>
+  </p>
 
-    <p>
+  <p>
     <label for="body">What's on your mind:</label><br />
     <textarea id="body" name="body" required rows="10" cols="53" minlength="1" maxlength="1000"></textarea><br />
-    </p>
+  </p>
 
-    <p>All done? Save the entry to your diary below</p>
-    <button type="submit">Save</button>
+  <p>
+    <label>Want to share your entry with others?</label>
+    <input type="radio" id="visibility1" name="public" value="public" />
+    <label for="visibility1">Yes, share!</label>
+    <input type="radio" id="visibility2" name="public" value="private" />
+    <label for="visibility2">No, this is private</label>
+  </p>
+
+  <p>All done? Save the entry to your diary below</p>
+  <button type="submit">Save</button>
 </form>
 
 <p><a href="{% url 'home' %}">Or return</a> without saving</p>

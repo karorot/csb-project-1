@@ -4,7 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+from random import choice
+
 from .models import Entry
+
+def random_entry():
+    public_entries = Entry.objects.filter(public=True)
+    return choice(public_entries)
 
 
 @login_required
@@ -31,8 +37,12 @@ def add_entry(request):
     writer = User.objects.get(id=request.user.id)
     title = request.POST.get('title')
     body = request.POST.get('body')
+    public = False
 
-    Entry.objects.create(writer=writer, title=title, body=body)
+    if request.POST.get('public') == 'public':
+        public = True
+
+    Entry.objects.create(writer=writer, title=title, body=body, public=public)
 
     messages.success(request, 'Entry saved!')
 
@@ -45,5 +55,6 @@ def index(request):
     if request.user.is_authenticated:
         entries = Entry.objects.filter(writer=request.user)
         context['entries'] = entries
+        context['random'] = random_entry()
 
     return render(request, 'deardiary/index.html', context)
