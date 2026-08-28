@@ -28,10 +28,14 @@ def random_entries():
 @login_required
 def read_entry(request, entry_id):
     '''Fetches the requested entry and renders it'''
-    try:
-        entry = Entry.objects.get(pk=entry_id)
-    except Entry.DoesNotExist:
-        raise Http404()
+
+    # fix for flaw 4: handling errors when the entry to be retrieved doesn't exist
+    # try:
+    #     entry = Entry.objects.get(pk=entry_id)
+    # except Entry.DoesNotExist:
+    #     raise Http404()
+
+    entry = Entry.objects.get(pk=entry_id)
 
     # fix for flaw 1: broken access control
     # if request.user != entry.writer:
