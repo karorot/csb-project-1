@@ -54,31 +54,37 @@ def create_entry(request):
 def add_entry(request):
     '''Adds a new entry object to the db based on form contents'''
 
-    if request.method == 'POST':
-        writer = User.objects.get(id=request.user.id)
+    # fix for flaw 5: Making sure only POST method is allowed
+    # Includes also retrieving the three values with request.POST.get instead of request.GET.get
+    #if request.method == 'POST':
+    writer = User.objects.get(id=request.user.id)
 
-        title = request.POST.get('title')
-        if not title or len(title) > 100:
-            messages.error(request, 'Title too long or missing')
-            return redirect('new')
+    # title = request.POST.get('title')
+    title = request.GET.get('title')
 
-        #Fix for flaw 2 to be used instead of the line below: sanitize_html(request.POST.get('body'))
-        body = request.POST.get('body') 
-        if not body or len(body) > 10000:
-            messages.error(request, 'Entry too long or missing')
-            return redirect('new')
+    if not title or len(title) > 100:
+        messages.error(request, 'Title too long or missing')
+        return redirect('new')
 
-        visibility = request.POST.get('public')
-        if not visibility:
-            messages.error(request, 'Specify visibility for the entry')
-            return redirect('new')
+    #Fix for flaw 2 (to be used instead of the line below) and flaw 5 (GET -> POST) 
+    # sanitize_html(request.POST.get('body'))
+    body = request.GET.get('body')
+    if not body or len(body) > 10000:
+        messages.error(request, 'Entry too long or missing')
+        return redirect('new')
 
-        public = False
-        if visibility == 'public':
-            public = True
+    # visibility = request.POST.get('public')
+    visibility = request.GET.get('public')
+    if not visibility:
+        messages.error(request, 'Specify visibility for the entry')
+        return redirect('new')
 
-        Entry.objects.create(writer=writer, title=title, body=body, public=public)
-        messages.success(request, 'Entry saved!')
+    public = False
+    if visibility == 'public':
+        public = True
+
+    Entry.objects.create(writer=writer, title=title, body=body, public=public)
+    messages.success(request, 'Entry saved!')
 
     return redirect('/')
 

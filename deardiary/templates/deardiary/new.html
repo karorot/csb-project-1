@@ -9,8 +9,11 @@
 You can use simple markup in the body text:<br /> 
 &lt;b&gt;<b>bold text</b>&lt;/b&gt; and &lt;i&gt;<i>italics</i>&lt;/i&gt;</i></p>
 
-<form action="{% url 'add' %}" method="post">
-  {% csrf_token %}
+<!-- fix for flaw 5: Using POST method and checking the CSRF token -->
+<!-- <form action="{% url 'add' %}" method="post"> -->
+<form action="{% url 'add' %}" method="get">
+  
+  <!-- {% csrf_token %} -->
 
   <p>
     <label for="title"><b>Title:</b></label><br />
