@@ -4,17 +4,30 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 
-from random import sample
+import bleach
 
 from .models import Entry
 
+
 def random_entries():
+    '''Picks five random entries from the db that are marked public'''
     public_entries = Entry.objects.filter(public=True).order_by('?')[:5]
     return list(public_entries)
 
 
+# fix for flaw 2: sanitizing user's input for simple html tags
+def sanitize_html(content):
+    '''Sanitizes HTML elements in the input'''
+    if not content:
+        return ""
+    sanitized = bleach.clean(content, tags=['b', 'i', 'br'], strip=True)
+    sanitized = sanitized.replace("\n", "<br />")
+    return sanitized
+
+
 @login_required
 def read_entry(request, entry_id):
+    '''Fetches the requested entry and renders it'''
     try:
         entry = Entry.objects.get(pk=entry_id)
     except Entry.DoesNotExist:
@@ -29,14 +42,16 @@ def read_entry(request, entry_id):
 
 @login_required
 def create_entry(request):
+    '''Renders the page for creating a new diary entry'''
     return render(request, 'deardiary/new.html')
 
 
 @login_required
 def add_entry(request):
+    '''Adds a new entry object to the db based on form contents'''
     writer = User.objects.get(id=request.user.id)
     title = request.POST.get('title')
-    body = request.POST.get('body')
+    body = sanitize_html(request.POST.get('body'))
     public = False
 
     if request.POST.get('public') == 'public':
@@ -50,6 +65,7 @@ def add_entry(request):
 
 
 def index(request):
+    '''Renders the home/index page'''
     context = {}
 
     if request.user.is_authenticated:

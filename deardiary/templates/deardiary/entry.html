@@ -8,7 +8,7 @@
 
 <h3>Title: {{ entry.title }}, {{ entry.pub_date }}</h3>
 
-<p>{{ entry.body }}</p>
+<p>{{ entry.body|safe }}</p>
 
 {% if not entry.public %}
   <p>(This entry is for my eyes only)</p>
