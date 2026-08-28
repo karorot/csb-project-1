@@ -16,13 +16,13 @@ def random_entries():
 
 
 # fix for flaw 2: sanitizing user's input for simple html tags
-def sanitize_html(content):
-    '''Sanitizes HTML elements in the input'''
-    if not content:
-        return ""
-    sanitized = bleach.clean(content, tags=['b', 'i', 'br'], strip=True)
-    sanitized = sanitized.replace("\n", "<br />")
-    return sanitized
+# def sanitize_html(content):
+#     '''Sanitizes HTML elements in the input'''
+#     if not content:
+#         return ""
+#     sanitized = bleach.clean(content, tags=['b', 'i', 'br'], strip=True)
+#     sanitized = sanitized.replace("\n", "<br />")
+#     return sanitized
 
 
 @login_required
@@ -58,7 +58,8 @@ def add_entry(request):
             messages.error(request, 'Title too long or missing')
             return redirect('new')
 
-        body = sanitize_html(request.POST.get('body'))
+        #Fix for flaw 2 to be used instead of the line below: sanitize_html(request.POST.get('body'))
+        body = request.POST.get('body') 
         if not body or len(body) > 10000:
             messages.error(request, 'Entry too long or missing')
             return redirect('new')
