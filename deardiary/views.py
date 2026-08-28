@@ -59,7 +59,7 @@ def add_entry(request):
             return redirect('new')
 
         body = sanitize_html(request.POST.get('body'))
-        if not body or len(body) > 1000:
+        if not body or len(body) > 10000:
             messages.error(request, 'Entry too long or missing')
             return redirect('new')
 

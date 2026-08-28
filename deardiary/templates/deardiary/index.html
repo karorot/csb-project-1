@@ -11,22 +11,23 @@
   <hr>
 
   {% if entries %}
-  <h2>Your diary entries</h2>
-  <ul>
-  {% for entry in entries %}
-    <li>{{ entry.pub_date }}: <a href="{% url 'entry' entry.id %}">{{ entry.title }}</a></li>
-  {% endfor %}
+    <h2>Your diary entries</h2>
+    <ul>
+      {% for entry in entries %}
+        <li>{{ entry.pub_date }}: <a href="{% url 'entry' entry.id %}">{{ entry.title }}</a></li>
+      {% endfor %}
+    </ul>
+    <hr>
   {% endif %}
-  </ul>
 
-  <hr>
-
-  <h2>Browse random public entries</h2>
-  <ul>
-  {% for pick in random %}
-    <li>{{ pick.pub_date }}: <a href="{% url 'entry' pick.id %}">{{ pick.title }}</a></li>
-  {% endfor %}
+  {% if random %}
+    <h2>Browse random public entries</h2>
+    <ul>
+      {% for pick in random %}
+        <li>{{ pick.pub_date }}: <a href="{% url 'entry' pick.id %}">{{ pick.title }}</a></li>
+      {% endfor %}
     </ul> 
+  {% endif %}
 
 {% else %}
   <p><a href="{% url 'login' %}">Login</a> to read and write to your personal diary.</p>
