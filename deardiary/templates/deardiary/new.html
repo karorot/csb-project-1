@@ -5,30 +5,32 @@
 {% block content %}
 
 <h2>Write your thoughts to your diary</h2>
+<p>Write a new entry to your diary with the form below. <br /><br />
+You can use simple markup in the body text:<br /> 
+&lt;b&gt;<b>bold text</b>&lt;/b&gt; and &lt;i&gt;<i>italics</i>&lt;/i&gt;</i></p>
 
 <form action="{% url 'add' %}" method="post">
   {% csrf_token %}
 
   <p>
-    <label for="title">Title:</label><br />
-    <input style="height:2em;width:30em" type="text" id="title" name="title" required minlength="1" maxlength="100"><br />
+    <label for="title"><b>Title:</b></label><br />
+    <input style="height:2em;width:30em" type="text" id="title" name="title" maxlength="100" required><br />
   </p>
 
   <p>
-    <label for="body">What's on your mind:</label><br />
-    <textarea id="body" name="body" required rows="10" cols="53" minlength="1" maxlength="1000"></textarea><br />
+    <label for="body"><b>What's on your mind:</b></label><br />
+    <textarea id="body" name="body" rows="10" cols="53" maxlength="1000" required></textarea><br />
   </p>
-  <i>You can use simple markup to make your diary entries pretty: &lt;b&gt; for bold, &lt;i&gt; for italics</i>
 
   <p>
     <label>Want to share your entry with others?</label><br /><br />
-    <input type="radio" id="visibility1" name="public" value="public" />
+    <input type="radio" id="visibility1" name="public" value="public" required />
     <label for="visibility1">Yes, share!</label>
     <input type="radio" id="visibility2" name="public" value="private" />
     <label for="visibility2">No, this is private</label>
   </p>
 
-  <p>All done? Save the entry to your diary below</p>
+  <p>All done? <b>Save</b> the entry to your diary below</p>
   <button type="submit">Save</button>
 </form>
 

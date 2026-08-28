@@ -49,17 +49,31 @@ def create_entry(request):
 @login_required
 def add_entry(request):
     '''Adds a new entry object to the db based on form contents'''
-    writer = User.objects.get(id=request.user.id)
-    title = request.POST.get('title')
-    body = sanitize_html(request.POST.get('body'))
-    public = False
 
-    if request.POST.get('public') == 'public':
-        public = True
+    if request.method == 'POST':
+        writer = User.objects.get(id=request.user.id)
 
-    Entry.objects.create(writer=writer, title=title, body=body, public=public)
+        title = request.POST.get('title')
+        if not title or len(title) > 100:
+            messages.error(request, 'Title too long or missing')
+            return redirect('new')
 
-    messages.success(request, 'Entry saved!')
+        body = sanitize_html(request.POST.get('body'))
+        if not body or len(body) > 1000:
+            messages.error(request, 'Entry too long or missing')
+            return redirect('new')
+
+        visibility = request.POST.get('public')
+        if not visibility:
+            messages.error(request, 'Specify visibility for the entry')
+            return redirect('new')
+
+        public = False
+        if visibility == 'public':
+            public = True
+
+        Entry.objects.create(writer=writer, title=title, body=body, public=public)
+        messages.success(request, 'Entry saved!')
 
     return redirect('/')
 

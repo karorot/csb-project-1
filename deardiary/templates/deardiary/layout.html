@@ -1,9 +1,11 @@
 <!doctype html>
+{% load static %}
 
 <html land="en-US">
   <head>
       <meta charset="utf-8" />
       <title>{% block title %}{% endblock %}</title>
+      <link rel="stylesheet" href="{% static 'style.css' %}">
   </head>
 
   <body>
@@ -22,7 +24,7 @@
 
     {% if messages %}
       {% for message in messages %}
-        {{ message }}
+        <div class="message">{{ message }}</div>
       {% endfor %}
     {% endif %}
 
