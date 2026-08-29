@@ -67,7 +67,7 @@ def add_entry(request):
         return redirect('new')
 
     #Fix for flaw 2 (to be used instead of the line below) and flaw 5 (GET -> POST) 
-    # sanitize_html(request.POST.get('body'))
+    # body = sanitize_html(request.POST.get('body'))
     body = request.GET.get('body')
     if not body or len(body) > 10000:
         messages.error(request, 'Entry too long or missing')
